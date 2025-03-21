@@ -59,4 +59,4 @@ VALUES
 select * from order_items ;
 
 
-select c.cust_name as customer_name, oi.quantity,p.p_name as product_name,p.price as product_price, (oi.quantity*p.price) as total_price from order_items oi join orders o on oi.ord_id = o.ord_id join products p on oi.p_id = p.p_id join customers c on c.cust_id =o.cust_id;
+select c.cust_name as customer_name, o.ord_date as order_date, oi.quantity,p.p_name as product_name,p.price as product_price, (oi.quantity*p.price) as total_price from order_items oi join orders o on oi.ord_id = o.ord_id join products p on oi.p_id = p.p_id join customers c on c.cust_id =o.cust_id;
