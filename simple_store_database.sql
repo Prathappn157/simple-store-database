@@ -1,8 +1,9 @@
 CREATE DATABASE store_db ;
+
 CREATE TABLE customers (
     cust_id SERIAL PRIMARY KEY,
     cust_name VARCHAR(100) NOT NULL
-);
+			);
 
 INSERT INTO customers (cust_name)
 VALUES
@@ -13,7 +14,7 @@ CREATE TABLE orders (
     ord_date DATE NOT NULL,
     cust_id INTEGER NOT NULL,
     FOREIGN KEY (cust_id) REFERENCES customers(cust_id)
-);
+			);
 
 INSERT INTO orders (ord_date, cust_id)
 VALUES
@@ -26,7 +27,7 @@ CREATE TABLE products (
     p_id SERIAL PRIMARY KEY,
     p_name VARCHAR(100) NOT NULL,
     price NUMERIC NOT NULL
-);
+			);
 
 INSERT INTO products (p_name, price)
 VALUES
@@ -42,7 +43,7 @@ CREATE TABLE order_items (
     quantity INTEGER NOT NULL,
     FOREIGN KEY (ord_id) REFERENCES orders(ord_id),
     FOREIGN KEY (p_id) REFERENCES products(p_id)
-							);
+			);
 
 INSERT INTO order_items (ord_id, p_id, quantity)
 VALUES
@@ -55,5 +56,10 @@ VALUES
 
 select * from order_items ;
 
+create view billing_report as
 
-select c.cust_name as customer_name, oi.quantity,p.p_name as product_name,p.price as product_price, (oi.quantity*p.price) as total_price from order_items oi join orders o on oi.ord_id = o.ord_id join products p on oi.p_id = p.p_id join customers c on c.cust_id =o.cust_id;
+select c.cust_name as customer_name,o.ord_date as order_date, oi.quantity,p.p_name as product_name,p.price as product_price, (oi.quantity*p.price) as total_price from order_items oi join orders o on oi.ord_id = o.ord_id join products p on oi.p_id = p.p_id join customers c on c.cust_id =o.cust_id;
+
+--- just run one command 
+
+select * from billing_report ;
